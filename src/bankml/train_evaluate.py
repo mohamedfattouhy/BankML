@@ -15,6 +15,8 @@ from .build_pipeline import pipeline_ml_train_bank
 
 
 def random_forest_bank(train, test, NTREES: int = 0) -> None:
+    """Random forest training for the prediction of
+       a deposit or not in the bank """
 
     X_train = train.drop("deposit", axis="columns")
     y_train = train["deposit"]
@@ -33,8 +35,7 @@ def random_forest_bank(train, test, NTREES: int = 0) -> None:
         # Create a GridSearchCV object to perform the search
         grid_search = GridSearchCV(pipeline_rdmf_train,
                                    param_grid=param_trees,
-                                   cv=5
-                                   )
+                                   cv=5)
 
         # Train the research grid on the training data
         grid_search.fit(X_train, y_train)
@@ -63,8 +64,7 @@ def random_forest_bank(train, test, NTREES: int = 0) -> None:
         # Create a GridSearchCV object to perform the search
         grid_search = GridSearchCV(pipeline_rdmf_train,
                                    param_grid=param_grid,
-                                   cv=5
-                                   )
+                                   cv=5)
 
         # Train the research grid on the training data
         grid_search.fit(X_train, y_train)
