@@ -1,4 +1,3 @@
-
 """This file some pipeline to preprocess the data"""
 
 #  MANAGEMENT ENVIRONMENT --------------------------------
