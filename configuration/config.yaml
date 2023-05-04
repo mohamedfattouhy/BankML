@@ -1,0 +1,4 @@
+path:
+  bank_dataset_path: data/raw/bank.csv
+model:
+  test_fraction: 0.25
