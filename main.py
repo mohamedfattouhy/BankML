@@ -37,4 +37,4 @@ train, test = train_test_split(
 random_forest_bank(train, test, NTREES=N_TREES)
 
 # To run the main file on cmd line use: python main.py or
-# use the argument N_TREES like that python main.py <N_TREES>
+# use the argument N_TREES like that: python main.py <N_TREES>
