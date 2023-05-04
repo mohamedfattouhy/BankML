@@ -24,11 +24,11 @@ def pipeline_fit_transform_data_bank() -> Pipeline:
 
     train = train.drop("deposit", axis="columns")
 
-    # Sélectionner les colonnes de type "object"
-    colonnes_object = train.select_dtypes(include=["object"]).columns.tolist()
+    # Select columns of type object or str
+    colonnes_object = train.select_dtypes(include=["object", "str"]).columns.tolist()
 
-    # Sélectionner les colonnes de type "int"
-    colonnes_int = train.select_dtypes(include=["int"]).columns.tolist()
+    # Select columns of type int or float
+    colonnes_int = train.select_dtypes(include=["float", "int"]).columns.tolist()
 
     numeric_transformer = Pipeline(
         steps=[("imputer", SimpleImputer(strategy="mean")),
@@ -61,10 +61,11 @@ def pipeline_fit_transform_data_bank() -> Pipeline:
 
 def pipeline_ml_train_bank(df, ML_Model) -> Pipeline:
 
-    # Sélectionner les colonnes de type "object"
+    
+    # Select columns of type object or str
     colonnes_object = df.select_dtypes(include=["object"]).columns.tolist()
 
-    # Sélectionner les colonnes de type "int"
+    # Select columns of type int or float
     colonnes_int = df.select_dtypes(include=["int"]).columns.tolist()
 
     numeric_transformer = Pipeline(

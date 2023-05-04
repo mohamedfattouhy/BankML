@@ -1,6 +1,6 @@
 # Prediction project on the data bank.csv
 
-This Git repository contains a (personal) prediction project on the dataset bank.csv. The main goal is not the prediction itself, but rather to be able to build a modular, portable and reproducible project structure.
+This Git repository contains a (personal) prediction project on the bank dataset. The main goal is not the prediction itself, but rather to be able to build a modular, portable and reproducible project structure.
 
 The project is organized in several directories:
 - **src/bankml**: contains the scripts for training and evaluating the models.
