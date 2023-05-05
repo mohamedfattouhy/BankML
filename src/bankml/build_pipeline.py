@@ -25,8 +25,7 @@ def pipeline_fit_transform_data_bank() -> Pipeline:
     train = train.drop("deposit", axis="columns")
 
     # Select columns of type object or str
-    colonnes_object = train.select_dtypes(include=["object",
-                                                   "str"]).columns.tolist()
+    colonnes_object = train.select_dtypes(include=["object"]).columns.tolist()
 
     # Select columns of type int or float
     colonnes_int = train.select_dtypes(include=["float",
@@ -66,8 +65,7 @@ def pipeline_ml_train_bank(df, ML_Model) -> Pipeline:
        and use a machine learning model"""
 
     # Select columns of type object or str
-    colonnes_object = df.select_dtypes(include=["object",
-                                                "str"]).columns.tolist()
+    colonnes_object = df.select_dtypes(include=["object"]).columns.tolist()
 
     # Select columns of type int or float
     colonnes_int = df.select_dtypes(include=["int",
