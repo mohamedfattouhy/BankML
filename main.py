@@ -13,7 +13,7 @@ from src.bankml.train_evaluate import random_forest_bank
 # PARAMETERS  -------------------------------
 
 config = import_yaml_config()
-path_raw_bank_data = config["path"]["bank_dataset_path"]
+path_raw_bank_data = config["path"]["data_url"]
 
 # Test size
 TEST_FRACTION = config["model"]["test_fraction"]

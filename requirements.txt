@@ -1,3 +1,4 @@
 PyYAML
 pandas
 scikit-learn
+datapackage
