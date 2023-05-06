@@ -1,4 +1,4 @@
-"""This file some pipeline to preprocess the data"""
+"""This file contains some pipeline to preprocess the data"""
 
 #  MANAGEMENT ENVIRONMENT --------------------------------
 from sklearn.compose import ColumnTransformer

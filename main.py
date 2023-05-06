@@ -33,9 +33,14 @@ train, test = train_test_split(
     stratify=df_bank["deposit"]
 )
 
-# MODELISATION: RANDOM FOREST ----------------------------
 
-random_forest_bank(train, test, NTREES=N_TREES)
+def main():
+    random_forest_bank(train, test, NTREES=N_TREES)
+
+
+# MODELISATION: RANDOM FOREST ----------------------------
+if __name__ == '__main__':
+    main()
 
 # To run the main file on cmd line use: python main.py or
 # use the argument N_TREES like that: python main.py <N_TREES>
