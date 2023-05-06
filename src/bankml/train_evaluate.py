@@ -1,7 +1,7 @@
 """We train and test our prediction model"""
 
 #  MANAGEMENT ENVIRONMENT --------------------------------
-
+import sys
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
@@ -25,12 +25,23 @@ def random_forest_bank(train, test, NTREES: int = 0) -> None:
                                                  RandomForestClassifier())
 
     if NTREES:
+        try:
+            n_trees = int(NTREES)
+            if (NTREES < 0) or (n_trees == 0):
+                raise ValueError("The 'n_estimators' parameter of "
+                                 "RandomForestClassifier must be an int "
+                                 "in the range [1, inf). Got {} instead."
+                                 .format(NTREES))
+        except ValueError as e:
+            print("Error:", e)
+            sys.exit(1)
+
         print()
-        print(f"You have chosen a number of trees equal to {NTREES}")
+        print(f"You have chosen a number of trees equal to {n_trees}")
         print()
         print("Model being optimized...")
 
-        param_trees = {"classifier__n_estimators": [NTREES]}
+        param_trees = {"classifier__n_estimators": [n_trees]}
 
         # Create a GridSearchCV object to perform the search
         grid_search = GridSearchCV(pipeline_rdmf_train,
@@ -43,7 +54,8 @@ def random_forest_bank(train, test, NTREES: int = 0) -> None:
     else:
         print()
         print(
-            "The (finally) selected model will be determined by a research grid"
+            "The (finally) selected model will be "
+            "determined by a research grid"
         )
         print()
         print("Model being optimized...")
@@ -98,11 +110,11 @@ def random_forest_bank(train, test, NTREES: int = 0) -> None:
     # score_test = grid_search.score(X_test, y_test)
     # print("Score test", score_test)
 
-    print("==" * 25)
+    print("==" * 20)
     print(
         f"{round(accuracy*100, 1)}% of correct answers on test data"
     )
-    print("==" * 25)
+    print("==" * 20)
 
     # print()
     # print("confusion matrix")

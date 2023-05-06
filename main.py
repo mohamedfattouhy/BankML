@@ -19,17 +19,18 @@ path_raw_bank_data = config["path"]["data_url"]
 TEST_FRACTION = config["model"]["test_fraction"]
 
 # Number of trees as command line argument
-N_TREES = int(sys.argv[1]) if len(sys.argv) == 2 else 0
+N_TREES = float(sys.argv[1]) if len(sys.argv) == 2 else 0
 
 # Load data and split train/test ================
-
 df_bank = import_data(path_raw_bank_data)
 
 # We split our dataset into a training part and a test part
 # Let's take arbitrarily 25% of the dataset for testing and 75% for learning.
 train, test = train_test_split(
-    df_bank, test_size=TEST_FRACTION,
-    random_state=42, stratify=df_bank["deposit"]
+    df_bank,
+    test_size=TEST_FRACTION,
+    random_state=42,
+    stratify=df_bank["deposit"]
 )
 
 # MODELISATION: RANDOM FOREST ----------------------------

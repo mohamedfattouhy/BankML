@@ -18,7 +18,7 @@ def import_yaml_config(file_path: str = CONFIG_FILE):
 
 
 def import_data(path_raw_bank_data) -> pd.DataFrame:
-    """Load, save and read data \
+    """Load, balance data \
     and returns it as a pandas DataFrame"""
 
     # Load Data Package into storage
