@@ -26,11 +26,11 @@ model = load("../model/random_forest_bank.joblib")
 app = FastAPI(
     title="Prediction of deposit in a bank",
     description="<center>Application to predict deposits at a bank\
-                 after a marketing campaign.\
-                 <br>An API version to facilitate the reuse of the model 🚀"
-    + '<br><br><img \
-                 src="https://cdn.pixabay.com/photo/2015/08/29/20/21/safe-913452_1280.jpg"\
-                 width="250"> </center>',
+                after a marketing campaign.\
+                <br>An API version to facilitate the reuse of the model 🚀"
+                + '<br><br><img \
+                src="https://cdn.pixabay.com/photo/2015/08/29/20/21/safe-913452_1280.jpg"\
+                width="250"> </center>'
 )
 
 
@@ -51,11 +51,11 @@ def welcome_page() -> str:
            <br> This is an API for predicting a deposit in a bank 🌐\
            <br> Model name: BankML\
            <br> Model version: 0.3\
-            <br> To change features: Press 'Try it out' in\
-            'Prediction' section ➔\
-            <a href='http://127.0.0.1:8000/docs' target='_blank'\
-            style='text-decoration:none; background: #fff;\
-            border: 1px dashed;'>Docs</a>"
+           <br> To change features: Press 'Try it out' in\
+           'Prediction' section ➔\
+           <a href='http://127.0.0.1:8000/docs' target='_blank'\
+           style='text-decoration:none; background: #fff;\
+           border: 1px dashed;'>Docs</a>"
 
     return welcome_message
 
@@ -105,7 +105,7 @@ async def predict(
             "campaign": [campaign],
             "pdays": [pdays],
             "previous": [previous],
-            "poutcome": [poutcome.name],
+            "poutcome": [poutcome.name]
         }
     )
 
@@ -114,8 +114,6 @@ async def predict(
         if model.predict(df_new) == "yes"
         else "Prediction for the given features: no deposit ❌"
     )
-
-    print(df_new.head())
 
     return HTMLResponse(prediction, media_type="text/html")
 
