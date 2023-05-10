@@ -3,7 +3,8 @@
 in the bank after a marketing campaign."""
 
 #  MANAGEMENT ENVIRONMENT --------------------------------
-from fastapi import FastAPI
+from fastapi import FastAPI, Form, Body
+from typing_extensions import Annotated
 from fastapi.responses import HTMLResponse
 from features.features_class import (
     Job,
@@ -62,22 +63,22 @@ def welcome_page() -> str:
 
 @app.put("/Prediction", tags=["Prediction"])
 async def predict(
-    education: EducationLevel,
-    marital: Marital,
-    job: Job,
-    default: Default,
-    contact: Contact,
-    loan: Loan,
-    housing: Housing,
-    month: Month,
-    poutcome: Poutcoume,
-    age: int = 62,
-    duration: int = 38,
-    campaign: int = 2,
-    pdays: int = 8,
-    previous: int = 10,
-    balance: int = 289,
-    day: int = 12,
+    education: Annotated[EducationLevel, Form()],
+    marital: Annotated[Marital, Form()],
+    job: Annotated[Job, Form()],
+    default: Annotated[Default, Form()],
+    contact: Annotated[Contact, Form()],
+    loan: Annotated[Loan, Form()],
+    housing: Annotated[Housing, Form()],
+    month: Annotated[Month, Form()],
+    poutcome: Annotated[Poutcoume, Form()],
+    age: int = Body(..., gt=0),
+    duration: int = Body(..., gt=0),
+    campaign:  int = Body(..., gt=0),
+    pdays: int = Body(...),
+    previous: int = Body(...),
+    balance: int = Body(..., gt=0),
+    day: int = Body(...),
 ) -> str:
 
     """
