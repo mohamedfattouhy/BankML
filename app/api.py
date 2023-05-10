@@ -5,6 +5,17 @@ in the bank after a marketing campaign."""
 #  MANAGEMENT ENVIRONMENT --------------------------------
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from features.features_class import (
+    Job,
+    Marital,
+    EducationLevel,
+    Default,
+    Housing,
+    Loan,
+    Contact,
+    Month,
+    Poutcoume,
+)
 from joblib import load
 import pandas as pd
 import subprocess
@@ -32,99 +43,81 @@ def welcome_page() -> str:
     Welcome page with model name, version, and
     link to 'Prediction' and 'docs' sections.
 
-    Returns: str with the welcome message in html format.
+    Returns:
+    str: The welcome message in html format.
     """
 
     welcome_message = "Welcome 🏴\
            <br> This is an API for predicting a deposit in a bank 🌐\
            <br> Model name: BankML\
-           <br> Model version: 0.2\
-           <br> Go to ➔ <a href='http://127.0.0.1:8000/Prediction'\
-            target='_blank' style='text-decoration:none;background: #fff;\
-            border: 1px dashed;'>Prediction</a>\
-           <br> To change features ➔\
+           <br> Model version: 0.3\
+            <br> To change features: Press 'Try it out' in\
+            'Prediction' section ➔\
             <a href='http://127.0.0.1:8000/docs' target='_blank'\
             style='text-decoration:none; background: #fff;\
-            border: 1px dashed;'>Docs</a> in 'Prediction' section"
+            border: 1px dashed;'>Docs</a>"
 
     return welcome_message
 
 
-@app.get("/Prediction", tags=["Prediction"], response_class=HTMLResponse)
+@app.put("/Prediction", tags=["Prediction"])
 async def predict(
+    education: EducationLevel,
+    marital: Marital,
+    job: Job,
+    default: Default,
+    contact: Contact,
+    loan: Loan,
+    housing: Housing,
+    month: Month,
+    poutcome: Poutcoume,
     age: int = 62,
-    job: str = "services",
-    marital: str = "married",
-    education: str = "secondary",
-    default: str = "no",
-    balance: int = 289,
-    housing: str = "127",
-    loan: float = 125.0,
-    contact: str = "telephone",
-    day: int = "15",
-    month: str = "may",
     duration: int = 38,
     campaign: int = 2,
     pdays: int = 8,
     previous: int = 10,
-    poutcome: str = "sucess",
+    balance: int = 289,
+    day: int = 12,
 ) -> str:
 
     """
     Prediction page which uses the trained model and
     returns the prediction for the given features.
 
-    Returns: str with the given features and prediction in html format.
+    Returns:
+    str: the prediction for the given features.
     """
 
     df_new = pd.DataFrame(
         {
             "age": [age],
-            "job": [job],
-            "marital": [marital],
-            "education": [education],
-            "default": [default],
+            "job": [job.name],
+            "marital": [marital.name],
+            "education": [education.name],
+            "default": [default.name],
             "balance": [balance],
-            "housing": [housing],
-            "loan": [loan],
-            "contact": [contact],
+            "housing": [housing.name],
+            "loan": [loan.name],
+            "contact": [contact.name],
             "day": [day],
-            "month": [month],
+            "month": [month.name],
             "duration": [duration],
             "campaign": [campaign],
             "pdays": [pdays],
             "previous": [previous],
-            "poutcome": [poutcome],
+            "poutcome": [poutcome.name],
         }
     )
 
     prediction = (
-        "Prediction for the given" "features: Deposit ✔️"
+        "Prediction for the given features: deposit ✔️"
         if model.predict(df_new) == "yes"
-        else "Prediction for" "the given features: No-deposit ❌"
+        else "Prediction for the given features: no deposit ❌"
     )
 
-    # Creation of the HTML table from the DataFrame
-    table_html = df_new.to_html(index=False, justify='center', border=3)
+    print(df_new.head())
 
-    html = f"""
-        <html>
-            <head>
-                <title>Prediction Page</title>
-            </head>
-            <body>
-                <div id="table_block">
-                    <h3>Table:</h3>
-                    {table_html}
-                </div>
-                <div id="prediction_block">
-                    <h3>Prediction:</h3>
-                    <p>{prediction}</p>
-                </div>
-            </body>
-        </html>
-    """
-    return html
+    return HTMLResponse(prediction, media_type="text/html")
 
 
 def main():
