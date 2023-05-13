@@ -3,9 +3,10 @@
 in the bank after a marketing campaign."""
 
 #  MANAGEMENT ENVIRONMENT --------------------------------
-from fastapi import FastAPI, Form, Body
-from typing_extensions import Annotated
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, Form
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.responses import HTMLResponse, PlainTextResponse
 from features.features_class import (
     Job,
     Marital,
@@ -22,30 +23,48 @@ import pandas as pd
 import subprocess
 import os
 
+
+description = (
+    "<center>Application to predict deposits at a bank\
+                 after a marketing campaign.\
+                 <br>An API version to facilitate the reuse of the model 🚀"
+    + '<br><br><img \
+                 src="https://cdn.pixabay.com/photo/2015/08/29/20/21/safe-913452_1280.jpg"\
+                 width="250"> </center>'
+)
+
+
 model = load("../model/random_forest_bank.joblib")
 
 app = FastAPI(
+    include_in_schema=1,
     title="Prediction of deposit in a bank",
-    description="<center>Application to predict deposits at a bank\
-                after a marketing campaign.\
-                <br>An API version to facilitate the reuse of the model 🚀"
-                + '<br><br><img \
-                src="https://cdn.pixabay.com/photo/2015/08/29/20/21/safe-913452_1280.jpg"\
-                width="250"> </center>'
+    description=description,
+    redoc_url=None,
 )
+
+
+# CHANGE ERROR DISPLAY --------------------------------
+
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request, exc):
+    return PlainTextResponse(str(exc.detail), status_code=exc.status_code)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    return PlainTextResponse(str(exc), status_code=400)
 
 
 # BUILD PAGES --------------------------------
 
-
-@app.get("/Welcome", tags=["Welcome"], response_class=HTMLResponse)
+@app.get("/Welcome", tags=" ", response_class=HTMLResponse)
 def welcome_page() -> str:
     """
-    Welcome page with model name, version, and
-    link to 'Prediction' and 'docs' sections.
+    **Description:** welcome page.
 
-    Returns:
-    str: The welcome message in html format.
+    **Returns:**
+    <br>_str_ : the welcome message in html format.
     """
 
     welcome_message = "Welcome 🏴\
@@ -61,32 +80,33 @@ def welcome_page() -> str:
     return welcome_message
 
 
-@app.put("/Prediction", tags=["Prediction"])
+@app.put("/Prediction", tags=" ")
 async def predict(
-    education: Annotated[EducationLevel, Form()],
-    marital: Annotated[Marital, Form()],
-    job: Annotated[Job, Form()],
-    default: Annotated[Default, Form()],
-    contact: Annotated[Contact, Form()],
-    loan: Annotated[Loan, Form()],
-    housing: Annotated[Housing, Form()],
-    month: Annotated[Month, Form()],
-    poutcome: Annotated[Poutcoume, Form()],
-    age: int = Body(..., gt=0),
-    duration: int = Body(..., gt=0),
-    campaign:  int = Body(..., gt=0),
-    pdays: int = Body(...),
-    previous: int = Body(...),
-    balance: int = Body(..., gt=0),
-    day: int = Body(...),
-) -> str:
+    education: EducationLevel = Form(description=" "),
+    marital: Marital = Form(..., description=" "),
+    job: Job = Form(..., description=" "),
+    default: Default = Form(..., description=" "),
+    contact: Contact = Form(..., description=" "),
+    loan: Loan = Form(..., description=" "),
+    housing: Housing = Form(..., description=" "),
+    month: Month = Form(..., description=" "),
+    poutcome: Poutcoume = Form(..., description=" "),
+    # age: Annotated[int, Query(gt=1, example=62)],
+    age: int = Form(..., gt=0, example=52),
+    duration: int = Form(..., gt=0),
+    campaign: int = Form(..., gt=0),
+    pdays: int = Form(...),
+    previous: int = Form(...),
+    balance: int = Form(..., gt=0),
+    day: int = Form(...),
+) -> dict:
 
     """
-    Prediction page which uses the trained model and
+    **Description:** prediction page which uses the trained model and
     returns the prediction for the given features.
 
-    Returns:
-    str: the prediction for the given features.
+    **Returns:**
+    <br>_str_ : the prediction for the given features.
     """
 
     df_new = pd.DataFrame(
@@ -106,7 +126,7 @@ async def predict(
             "campaign": [campaign],
             "pdays": [pdays],
             "previous": [previous],
-            "poutcome": [poutcome.name]
+            "poutcome": [poutcome.name],
         }
     )
 
@@ -116,7 +136,9 @@ async def predict(
         else "Prediction for the given features: no deposit ❌"
     )
 
-    return HTMLResponse(prediction, media_type="text/html")
+    result = {"result": prediction}
+
+    return result
 
 
 def main():
