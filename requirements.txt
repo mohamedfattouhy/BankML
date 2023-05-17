@@ -1,7 +1,10 @@
 PyYAML
 pandas
+matplotlib
 scikit-learn
 datapackage
+uvicorn
 fastapi
 pyarrow
 fastparquet
+python-multipart
