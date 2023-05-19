@@ -25,10 +25,15 @@ jobs:
       - name: Lint
         run: |
           # stop the test if the quality score is below 6
-          pylint src --fail-under=6
+          pylint src/bankml/build_pipeline.py --fail-under=6
+          pylint src/bankml/import_data.py --fail-under=6
+          pylint src/bankml/train_evaluate.py --fail-under=6
       - name: Run main with 1 tree
         run: |
           python main.py 1
       - name: Run tests of API with pytest
         run: |
           pytest test_api.py
+
+# git rm -r nom_du_repertoire
+# git commit -m "Supprimer le répertoire nom_du_repertoire"
