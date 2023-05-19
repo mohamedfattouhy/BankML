@@ -4,7 +4,7 @@ Some functions to test if our API is working properly.
 
 #  MANAGEMENT ENVIRONMENT --------------------------------
 from fastapi.testclient import TestClient
-from .api import app
+from api import app
 
 client = TestClient(app)
 
