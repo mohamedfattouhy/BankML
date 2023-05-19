@@ -34,6 +34,3 @@ jobs:
       - name: Run tests of API with pytest
         run: |
           pytest test_api.py
-
-# git rm -r nom_du_repertoire
-# git commit -m "Supprimer le répertoire nom_du_repertoire"
