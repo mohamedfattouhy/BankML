@@ -4,17 +4,18 @@
 
 This Git repository contains a (personal) prediction project on the bank dataset. The main goal is not the prediction itself, but rather to be able to build a modular, portable and reproducible project structure.
 
-The project is organized in several directories:
-- **src/bankml**: contains the scripts for training and evaluating the models.
-- **model**: contains a *random forest* trained on the data for prediction.
-- **configuration**: contains a yaml file to store some variables.
-- **app**: contains an api to use our ML model (random forest).
+The project is organized in several files and directories:
+- **src/bankml/**: a package that contains the scripts for training and evaluating the models.
+- **model/**: contains a *random forest* trained on the data for prediction.
+- **configuration/**: contains a yaml file to store some variables.
+- **main.py**: the main file contains the code to train the ml model.
+- **api.py**: the api file contains an api to use the trained ml model.
 
 The project is based on the following Git repository: https://github.com/ensae-reproductibilite/application-correction. This project has been designed to illustrate the different steps that separate the development phase of a project from the production phase.
 
 ## Instructions
 
-To execute this project, you can follow these steps:
+To use the ML model, you can follow these steps:
 
 1. Clone the Git repository on your computer `git clone <project link>`.
 2. Run the `install.sh` file in a terminal.
@@ -27,5 +28,7 @@ The official documentation of FastAPI is available here: https://fastapi.tiangol
 
 To execute the API, you can follow these steps:
 
-1. Access the API file : `cd app/`
+1. Clone the Git repository on your computer `git clone <project link>`.
 2. To run the API locally from a terminal, use the following command line : `python api.py`
+
+Note: It is possible to install the package (_bankml_) with the command: `pip install .` (after cloning the repository).
