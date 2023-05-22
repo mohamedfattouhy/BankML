@@ -10,7 +10,7 @@ from sklearn.metrics import (
     #  confusion_matrix
 )
 from sklearn.model_selection import GridSearchCV
-from .build_pipeline import pipeline_ml_train_bank
+from bankml.build_pipeline import pipeline_ml_train_bank
 # from joblib import dump
 
 
@@ -33,8 +33,9 @@ def random_forest_bank(train, test, NTREES: int = 0) -> None:
                                  "in the range [1, inf). Got {} instead."
                                  .format(NTREES))
         except ValueError as e:
-            print("Error:", e)
-            sys.exit(1)
+            print("Value error:", e)
+            raise
+            # sys.exit(1)
 
         print()
         print(f"You have chosen a number of trees equal to {n_trees}")

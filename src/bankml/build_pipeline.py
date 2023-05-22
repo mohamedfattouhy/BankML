@@ -6,15 +6,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
-from .import_data import import_yaml_config, import_data
+from bankml.import_data import import_yaml_config, import_data
 
 
 def pipeline_fit_transform_data_bank() -> Pipeline:
     """Creation of a pipeline to pre-process training data"""
 
     config = import_yaml_config()
-    path_train_data = config["path"]["bank_dataset_path"]
-    df = import_data(path_train_data)
+    path_raw_bank_data = config["path"]["data_url"]
+
+    df = import_data(path_raw_bank_data)
 
     test_fraction = config["model"]["test_fraction"]
 
@@ -33,8 +34,7 @@ def pipeline_fit_transform_data_bank() -> Pipeline:
 
     numeric_transformer = Pipeline(
         steps=[("imputer", SimpleImputer(strategy="mean")),
-               ("scaler", MinMaxScaler())
-               ]
+               ("scaler", MinMaxScaler())]
     )
 
     categorical_transformer = Pipeline(
@@ -60,21 +60,23 @@ def pipeline_fit_transform_data_bank() -> Pipeline:
     return preprocessing_pipeline
 
 
-def pipeline_ml_train_bank(df, ML_Model) -> Pipeline:
+def pipeline_ml_train_bank(df, ml_model) -> Pipeline:
     """Creation of a pipeline to pre-process data
-       and use a machine learning model"""
+    and use a machine learning model"""
+
+    # We check if df is empty with the empty method
+    if df.empty:
+        raise ValueError("df is empty")
 
     # Select columns of type object or str
     colonnes_object = df.select_dtypes(include=["object"]).columns.tolist()
 
     # Select columns of type int or float
-    colonnes_int = df.select_dtypes(include=["int",
-                                             "float"]).columns.tolist()
+    colonnes_int = df.select_dtypes(include=["int", "float"]).columns.tolist()
 
     numeric_transformer = Pipeline(
         steps=[("imputer", SimpleImputer(strategy="mean")),
-               ("scaler", MinMaxScaler())
-               ]
+               ("scaler", MinMaxScaler())]
     )
 
     categorical_transformer = Pipeline(
@@ -93,10 +95,7 @@ def pipeline_ml_train_bank(df, ML_Model) -> Pipeline:
         remainder="passthrough",
     )
 
-    pipeline_ml = Pipeline(
-        [("preprocessor", preprocessor),
-         ("classifier", ML_Model)
-         ]
-    )
+    pipeline_ml = Pipeline([("preprocessor", preprocessor),
+                            ("classifier", ml_model)])
 
     return pipeline_ml

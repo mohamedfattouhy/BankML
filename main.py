@@ -7,8 +7,9 @@ a bank after a marketing campaign.
 
 import sys
 from sklearn.model_selection import train_test_split
-from src.bankml.import_data import import_yaml_config, import_data
-from src.bankml.train_evaluate import random_forest_bank
+from bankml.import_data import import_yaml_config, import_data
+from bankml.train_evaluate import random_forest_bank
+
 
 # PARAMETERS  -------------------------------
 

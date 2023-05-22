@@ -17,7 +17,7 @@ The project is based on the following Git repository: https://github.com/ensae-r
 
 To use the ML model, you can follow these steps:
 
-1. Clone the Git repository on your computer `git clone <project link>`.
+1. Clone the Git repository on your computer `git clone <project link>`
 2. Run the `install.sh` file in a terminal.
 3. To train the ML model (random forest), run in a terminal `python main.py` or `python main.py <N_TREES>` to perform data collection, data preparation, training and model evaluation. In case you choose to specify **N_TREES**, make sure it is an integer greater than or equal to 1, as it indicates the number of trees in the random forest.
 
@@ -28,7 +28,8 @@ The official documentation of FastAPI is available here: https://fastapi.tiangol
 
 To execute the API, you can follow these steps:
 
-1. Clone the Git repository on your computer `git clone <project link>`.
-2. To run the API locally from a terminal, use the following command line : `python api.py`
+1. Clone the Git repository on your computer `git clone <project link>`
+2. Go to the **api** directory: `cd api/`
+3. Run the API locally from a terminal by using the following command line : `python api.py`
 
 Note: It is possible to install the package (_bankml_) with the command: `pip install .` (after cloning the repository).

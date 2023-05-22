@@ -31,6 +31,9 @@ jobs:
       - name: Run main with 1 tree
         run: |
           python main.py 1
+      - name: Run tests with pytest
+        run: |
+          cd tests && python -m pytest .
       - name: Run tests of API with pytest
         run: |
-          pytest test_api.py
+          cd api && python -m pytest test_api.py

@@ -1,6 +1,7 @@
 """Import data"""
 
 #  MANAGEMENT ENVIRONMENT --------------------------------
+import os
 import yaml
 import pandas as pd
 import datapackage
@@ -8,7 +9,13 @@ from sklearn.utils import resample
 
 
 # CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.yaml")
-CONFIG_FILE = "configuration/config.yaml"
+# COLUMNS_NAMES = os.path.join(os.path.dirname(__file__), "columns_name.txt")
+CONFIG_FILE = os.path.join(
+    os.path.dirname(__file__), "..", "..", "configuration", "config.yaml"
+)
+COLUMNS_NAMES = os.path.join(
+    os.path.dirname(__file__), "..", "..", "configuration", "columns_name.txt"
+)
 
 
 def import_yaml_config(file_path: str = CONFIG_FILE):
@@ -17,7 +24,7 @@ def import_yaml_config(file_path: str = CONFIG_FILE):
         return yaml.safe_load(file)
 
 
-def import_data(path_raw_bank_data) -> pd.DataFrame:
+def import_data(path_raw_bank_data: str) -> pd.DataFrame:
     """Load, balance data \
     and returns it as a pandas DataFrame"""
 
@@ -28,7 +35,7 @@ def import_data(path_raw_bank_data) -> pd.DataFrame:
     resources = package.resources
     df_bank = pd.read_csv(resources[1].descriptor["path"])
 
-    with open("configuration/columns_name.txt", "r") as f:
+    with open(COLUMNS_NAMES, "r") as f:
         content = f.read()
 
     cols_name = list(content.split(","))
