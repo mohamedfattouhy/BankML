@@ -29,10 +29,10 @@ jobs:
           pylint src/bankml/build_pipeline.py --fail-under=6
           pylint src/bankml/import_data.py --fail-under=6
           pylint src/bankml/train_evaluate.py --fail-under=6
-      - name: Set PYTHONPATH
-        run: |
-          echo "::add-path::src/"
-          export PYTHONPATH="./src/"
+      # - name: Set PYTHONPATH
+      #   run: |
+      #     echo "::add-path::src/"
+      #     export PYTHONPATH="./src/"
       - name: Run main with 1 tree
         run: |
           python main.py 1

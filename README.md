@@ -1,6 +1,6 @@
 # Prediction project on the data bank dataset
 
-[![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
+[![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/mohamedfattouhy/BankML/ci.yaml?branch=main)
 
 This Git repository contains a (personal) prediction project on the bank dataset. The main goal is not the prediction itself, but rather to be able to build a modular, portable and reproducible project structure.
 
