@@ -6,8 +6,8 @@ This Git repository contains a (personal) prediction project on the bank dataset
 
 The project is organized in several files and directories:
 - **src/bankml/**: a package that contains the scripts for training and evaluating the models.
+- **src/configuration/**: contains a yaml file to store some variables.
 - **model/**: contains a *random forest* trained on the data for prediction.
-- **configuration/**: contains a yaml file to store some variables.
 - **main.py**: the main file contains the code to train the ml model.
 - **api.py**: the api file contains an api to use the trained ml model.
 
