@@ -22,13 +22,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint pytest httpx
           pip install -r requirements.txt
-          pip install .
+          pip install -e ./src/bankml
       - name: Lint
         run: |
           # stop the test if the quality score is below 6
           pylint src/bankml/build_pipeline.py --fail-under=6
           pylint src/bankml/import_data.py --fail-under=6
           pylint src/bankml/train_evaluate.py --fail-under=6
+      - name: Enable insecure commands
+        run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
       - name: Set PYTHONPATH
         run: |
           echo "::add-path::src/bankml"
