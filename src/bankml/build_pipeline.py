@@ -18,7 +18,6 @@ def pipeline_fit_transform_data_bank() -> Pipeline:
     df = import_data(path_raw_bank_data)
 
     test_fraction = config["model"]["test_fraction"]
-    # test_fraction = 0.3
 
     train, _ = train_test_split(
         df, test_size=test_fraction, stratify=df["deposit"], random_state=42

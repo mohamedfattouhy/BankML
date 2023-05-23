@@ -16,3 +16,7 @@ source bankml_env/bin/activate
 
 # Install project dependencies
 pip install -r requirements.txt
+
+# Install bankml package and add src/ to PYTHONPATH
+pip install .
+export PYTHONPATH="./src/"

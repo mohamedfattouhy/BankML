@@ -4,7 +4,6 @@ a bank after a marketing campaign.
 """
 
 #  MANAGEMENT ENVIRONMENT --------------------------------
-
 import sys
 from sklearn.model_selection import train_test_split
 from bankml.import_data import import_yaml_config, import_data
@@ -12,13 +11,11 @@ from bankml.train_evaluate import random_forest_bank
 
 
 # PARAMETERS  -------------------------------
-
 config = import_yaml_config()
 path_raw_bank_data = config["path"]["data_url"]
 
 # Test size
 TEST_FRACTION = config["model"]["test_fraction"]
-# TEST_FRACTION = 0.3
 
 # Number of trees as command line argument
 N_TREES = float(sys.argv[1]) if len(sys.argv) == 2 else 0
@@ -34,7 +31,6 @@ train, test = train_test_split(
     random_state=42,
     stratify=df_bank["deposit"]
 )
-
 
 train.to_parquet("train.parquet")
 

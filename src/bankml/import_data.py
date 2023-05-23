@@ -1,7 +1,6 @@
 """Import data"""
 
 #  MANAGEMENT ENVIRONMENT --------------------------------
-# import os
 import yaml
 import pandas as pd
 import datapackage
@@ -19,9 +18,6 @@ from configuration import configuration
 # file and variable names
 CONFIG_FILE = configuration.CONFIG_FILE
 COLUMNS_NAMES = configuration.COLUMNS_NAMES
-
-# url to load data from
-# data_url = "https://datahub.io/machine-learning/bank-marketing/datapackage.json"
 
 
 def import_yaml_config(file_path: str = CONFIG_FILE):
@@ -45,10 +41,6 @@ def import_data(path_raw_bank_data: str) -> pd.DataFrame:
         content = f.read()
 
     cols_name = list(content.split(","))
-    # cols_name = ["age", "job", "marital", "education", "default",
-    #              "balance", "housing", "loan", "contact", "day",
-    #              "month", "duration", "campaign", "pdays", "previous",
-    #              "poutcome", "deposit"]
 
     df_bank.columns = cols_name
 
