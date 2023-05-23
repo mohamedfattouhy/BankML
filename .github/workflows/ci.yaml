@@ -31,10 +31,10 @@ jobs:
           pylint src/bankml/train_evaluate.py --fail-under=6
       # - name: Enable insecure commands
       #   run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
-      - name: Set PYTHONPATH
-        run: |
-          echo "::add-path::./src/"
-          export PYTHONPATH="./src"
+      # - name: Set PYTHONPATH
+      #   run: |
+      #     echo "::add-path::./src/"
+      #     export PYTHONPATH="./src"
       - name: Run main with 1 tree
         run: |
           python main.py 1
