@@ -1,7 +1,8 @@
 #  MANAGEMENT ENVIRONMENT --------------------------------
 import os
 
-# get the absolute path of the configuration file and variable names
+# get the absolute path of the configuration
+# file and variable names
 CONFIG_FILE = os.path.join(
     os.path.dirname(__file__), "config.yaml"
 )
