@@ -6,19 +6,19 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
-from bankml.import_data import import_data
+from bankml.import_data import import_yaml_config, import_data
 
 
 def pipeline_fit_transform_data_bank() -> Pipeline:
     """Creation of a pipeline to pre-process training data"""
 
-    # config = import_yaml_config()
-    # path_raw_bank_data = config["path"]["data_url"]
+    config = import_yaml_config()
+    path_raw_bank_data = config["path"]["data_url"]
 
-    df = import_data()
+    df = import_data(path_raw_bank_data)
 
-    # test_fraction = config["model"]["test_fraction"]
-    test_fraction = 0.3
+    test_fraction = config["model"]["test_fraction"]
+    # test_fraction = 0.3
 
     train, _ = train_test_split(
         df, test_size=test_fraction, stratify=df["deposit"], random_state=42
