@@ -3,7 +3,7 @@ import unittest
 import pandas as pd
 from bankml.train_evaluate import random_forest_bank
 from sklearn.model_selection import train_test_split
-from bankml.import_data import import_yaml_config, import_data
+from bankml.import_data import import_data
 
 
 # TESTS  -------------------------------
@@ -11,16 +11,15 @@ class TestTrainerModel(unittest.TestCase):
 
     def setUp(self):
         # PARAMETERS  -------------------------------
-        self.config = import_yaml_config()
-        self.path_raw_bank_data = self.config["path"]["data_url"]
-        self.TEST_FRACTION = self.config["model"]["test_fraction"]
+        # self.config = import_yaml_config()
+        # self.path_raw_bank_data = self.config["path"]["data_url"]
+        self.TEST_FRACTION = 0.3
 
-        # define a valid and an invalid url for the tests
-        self.url_valide = self.path_raw_bank_data
-        self.url_invalide = "https://www.google.com/404"
+        # url to load data from
+        self.url = "https://datahub.io/machine-learning/bank-marketing/datapackage.json"
 
         # Load data and split train/test ----------------------------
-        self.df_bank = import_data(self.path_raw_bank_data)
+        self.df_bank = import_data(self.url)
         self.train, self.test = train_test_split(
             self.df_bank,
             test_size=self.TEST_FRACTION,
@@ -28,7 +27,7 @@ class TestTrainerModel(unittest.TestCase):
             stratify=self.df_bank["deposit"],
         )
 
-        # define valid train and test dataframes
+        # train and test dataframes (reduce size to go faster)
         self.train = self.train.sample(frac=0.05, random_state=42)
         self.test = self.test.sample(frac=0.05, random_state=42)
 
@@ -51,10 +50,12 @@ class TestTrainerModel(unittest.TestCase):
             random_forest_bank(self.train, pd.DataFrame(), NTREES=1)
         with self.assertRaises(KeyError):
             # train does not have the column 'deposit' (target)
-            random_forest_bank(self.train.drop("deposit", axis=1), self.test, NTREES=1)
+            random_forest_bank(self.train.drop("deposit", axis=1),
+                               self.test, NTREES=1)
         with self.assertRaises(KeyError):
             # test does not have the column 'deposit' (target)
-            random_forest_bank(self.train, self.test.drop("deposit", axis=1), NTREES=1)
+            random_forest_bank(self.train, self.test.drop("deposit", axis=1),
+                               NTREES=1)
 
 
 if __name__ == "__main__":
