@@ -7,23 +7,24 @@ a bank after a marketing campaign.
 
 import sys
 from sklearn.model_selection import train_test_split
-from bankml.import_data import import_yaml_config, import_data
+from bankml.import_data import import_data
 from bankml.train_evaluate import random_forest_bank
 
 
 # PARAMETERS  -------------------------------
 
-config = import_yaml_config()
-path_raw_bank_data = config["path"]["data_url"]
+# config = import_yaml_config()
+# path_raw_bank_data = config["path"]["data_url"]
 
 # Test size
-TEST_FRACTION = config["model"]["test_fraction"]
+# TEST_FRACTION = config["model"]["test_fraction"]
+TEST_FRACTION = 0.3
 
 # Number of trees as command line argument
 N_TREES = float(sys.argv[1]) if len(sys.argv) == 2 else 0
 
 # Load data and split train/test ----------------------------
-df_bank = import_data(path_raw_bank_data)
+df_bank = import_data()
 
 # We split our dataset into a training part and a test part
 # Let's take arbitrarily 25% of the dataset for testing and 75% for learning.

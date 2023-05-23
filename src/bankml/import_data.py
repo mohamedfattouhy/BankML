@@ -1,27 +1,30 @@
 """Import data"""
 
 #  MANAGEMENT ENVIRONMENT --------------------------------
-import os
-import yaml
+# import os
+# import yaml
 import pandas as pd
 import datapackage
 from sklearn.utils import resample
 
-CONFIG_FILE = os.path.join(
-    os.path.dirname(__file__), "config.yaml"
-)
-COLUMNS_NAMES = os.path.join(
-    os.path.dirname(__file__), "columns_name.txt"
-)
+# CONFIG_FILE = os.path.join(
+#     os.path.dirname(__file__), "config.yaml"
+# )
+# COLUMNS_NAMES = os.path.join(
+#     os.path.dirname(__file__), "columns_name.txt"
+# )
+
+# url to load data from
+data_url = "https://datahub.io/machine-learning/bank-marketing/datapackage.json"
 
 
-def import_yaml_config(file_path: str = CONFIG_FILE):
-    """Read the yaml file"""
-    with open(file_path, "r", encoding="utf-8") as file:
-        return yaml.safe_load(file)
+# def import_yaml_config(file_path: str = CONFIG_FILE):
+#     """Read the yaml file"""
+#     with open(file_path, "r", encoding="utf-8") as file:
+#         return yaml.safe_load(file)
 
 
-def import_data(path_raw_bank_data: str) -> pd.DataFrame:
+def import_data(path_raw_bank_data: str = data_url) -> pd.DataFrame:
     """Load, balance data \
     and returns it as a pandas DataFrame"""
 
@@ -32,10 +35,15 @@ def import_data(path_raw_bank_data: str) -> pd.DataFrame:
     resources = package.resources
     df_bank = pd.read_csv(resources[1].descriptor["path"])
 
-    with open(COLUMNS_NAMES, "r") as f:
-        content = f.read()
+    # with open(COLUMNS_NAMES, "r") as f:
+    #     content = f.read()
 
-    cols_name = list(content.split(","))
+    # cols_name = list(content.split(","))
+    cols_name = ["age", "job", "marital", "education", "default",
+                 "balance", "housing", "loan", "contact", "day",
+                 "month", "duration", "campaign", "pdays", "previous",
+                 "poutcome", "deposit"]
+
     df_bank.columns = cols_name
 
     df_bank.deposit = df_bank.deposit.map({1: "no", 2: "yes"})
