@@ -11,10 +11,10 @@ from sklearn.utils import resample
 # CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.yaml")
 # COLUMNS_NAMES = os.path.join(os.path.dirname(__file__), "columns_name.txt")
 CONFIG_FILE = os.path.join(
-    os.path.dirname(__file__), "..", "configuration", "config.yaml"
+    os.path.dirname(__file__), "configuration", "config.yaml"
 )
 COLUMNS_NAMES = os.path.join(
-    os.path.dirname(__file__), "..", "configuration", "columns_name.txt"
+    os.path.dirname(__file__), "configuration", "columns_name.txt"
 )
 
 

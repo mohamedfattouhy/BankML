@@ -29,12 +29,12 @@ jobs:
           pylint src/bankml/build_pipeline.py --fail-under=6
           pylint src/bankml/import_data.py --fail-under=6
           pylint src/bankml/train_evaluate.py --fail-under=6
-      - name: Enable insecure commands
-        run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
-      - name: Set PYTHONPATH
-        run: |
-          echo "::add-path::src/bankml"
-          export PYTHONPATH="./src/bankml"
+      # - name: Enable insecure commands
+      #   run: echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
+      # - name: Set PYTHONPATH
+      #   run: |
+      #     echo "::add-path::src/bankml"
+      #     export PYTHONPATH="./src/bankml"
       - name: Run main with 1 tree
         run: |
           python main.py 1
