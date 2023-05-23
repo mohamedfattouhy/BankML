@@ -1,7 +1,7 @@
 #  MANAGEMENT ENVIRONMENT --------------------------------
 import unittest
 import pandas as pd
-from bankml.import_data import import_data
+from bankml.import_data import import_yaml_config, import_data
 
 
 # TESTS  -------------------------------
@@ -9,11 +9,12 @@ class TestDownloadData(unittest.TestCase):
 
     def setUp(self):
         # PARAMETERS  -------------------------------
-        # self.config = import_yaml_config()
-        # path_raw_bank_data = self.config["path"]["data_url"]
+        self.config = import_yaml_config()
+        path_raw_bank_data = self.config["path"]["data_url"]
 
         # define a valid and an invalid url for the tests
-        self.url_valide = "https://datahub.io/machine-learning/bank-marketing/datapackage.json"
+        # self.url_valide = "https://datahub.io/machine-learning/bank-marketing/datapackage.json"
+        self.url_valide = path_raw_bank_data
         self.url_invalide = "https://www.google.com/404"
 
     def test_type(self):

@@ -1,5 +1,5 @@
 path:
-  bank_dataset_path: data/raw/bank.csv
+  # bank_dataset_path: data/raw/bank.csv
   data_url: "https://datahub.io/machine-learning/bank-marketing/datapackage.json"
 model:
   test_fraction: 0.3

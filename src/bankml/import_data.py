@@ -2,10 +2,11 @@
 
 #  MANAGEMENT ENVIRONMENT --------------------------------
 # import os
-# import yaml
+import yaml
 import pandas as pd
 import datapackage
 from sklearn.utils import resample
+from configuration import configuration
 
 # CONFIG_FILE = os.path.join(
 #     os.path.dirname(__file__), "config.yaml"
@@ -14,17 +15,22 @@ from sklearn.utils import resample
 #     os.path.dirname(__file__), "columns_name.txt"
 # )
 
+# get the absolute path of the configuration
+# file and variable names
+CONFIG_FILE = configuration.CONFIG_FILE
+COLUMNS_NAMES = configuration.COLUMNS_NAMES
+
 # url to load data from
-data_url = "https://datahub.io/machine-learning/bank-marketing/datapackage.json"
+# data_url = "https://datahub.io/machine-learning/bank-marketing/datapackage.json"
 
 
-# def import_yaml_config(file_path: str = CONFIG_FILE):
-#     """Read the yaml file"""
-#     with open(file_path, "r", encoding="utf-8") as file:
-#         return yaml.safe_load(file)
+def import_yaml_config(file_path: str = CONFIG_FILE):
+    """Read the yaml file"""
+    with open(file_path, "r", encoding="utf-8") as file:
+        return yaml.safe_load(file)
 
 
-def import_data(path_raw_bank_data: str = data_url) -> pd.DataFrame:
+def import_data(path_raw_bank_data: str) -> pd.DataFrame:
     """Load, balance data \
     and returns it as a pandas DataFrame"""
 
@@ -35,14 +41,14 @@ def import_data(path_raw_bank_data: str = data_url) -> pd.DataFrame:
     resources = package.resources
     df_bank = pd.read_csv(resources[1].descriptor["path"])
 
-    # with open(COLUMNS_NAMES, "r") as f:
-    #     content = f.read()
+    with open(COLUMNS_NAMES, "r") as f:
+        content = f.read()
 
-    # cols_name = list(content.split(","))
-    cols_name = ["age", "job", "marital", "education", "default",
-                 "balance", "housing", "loan", "contact", "day",
-                 "month", "duration", "campaign", "pdays", "previous",
-                 "poutcome", "deposit"]
+    cols_name = list(content.split(","))
+    # cols_name = ["age", "job", "marital", "education", "default",
+    #              "balance", "housing", "loan", "contact", "day",
+    #              "month", "duration", "campaign", "pdays", "previous",
+    #              "poutcome", "deposit"]
 
     df_bank.columns = cols_name
 

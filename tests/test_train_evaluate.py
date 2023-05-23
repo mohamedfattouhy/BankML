@@ -3,7 +3,7 @@ import unittest
 import pandas as pd
 from bankml.train_evaluate import random_forest_bank
 from sklearn.model_selection import train_test_split
-from bankml.import_data import import_data
+from bankml.import_data import import_yaml_config, import_data
 
 
 # TESTS  -------------------------------
@@ -11,12 +11,15 @@ class TestTrainerModel(unittest.TestCase):
 
     def setUp(self):
         # PARAMETERS  -------------------------------
-        # self.config = import_yaml_config()
-        # self.path_raw_bank_data = self.config["path"]["data_url"]
-        self.TEST_FRACTION = 0.3
+        self.config = import_yaml_config()
+        self.path_raw_bank_data = self.config["path"]["data_url"]
+
+        # self.TEST_FRACTION = 0.3
+        self.TEST_FRACTION = self.config["model"]["test_fraction"]
 
         # url to load data from
-        self.url = "https://datahub.io/machine-learning/bank-marketing/datapackage.json"
+        # self.url = "https://datahub.io/machine-learning/bank-marketing/datapackage.json"
+        self.url = self.config["path"]["data_url"]
 
         # Load data and split train/test ----------------------------
         self.df_bank = import_data(self.url)
