@@ -21,7 +21,7 @@ classifiers = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["src/bankml"]
+where = ["./src"]
 
 [tool.setuptools.package-data]
 bankml = ["*.yaml"]
